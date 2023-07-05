@@ -1,9 +1,33 @@
+import os
+
 from telebot.async_telebot import AsyncTeleBot
 from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
+from dotenv import load_dotenv , find_dotenv
 
-#from random  import*
+load_dotenv(find_dotenv())
 
-bot = AsyncTeleBot("6303803551:AAHSolp6PGR07ZlGdPadSdDCwVVvP0jmbwY")
+TOKEN= os.getenv('nazvanie_peremenou')
+bot = AsyncTeleBot(TOKEN, parse_mode='HTML')
+
+
+
+@bot.message_handler(commands=['timer'])
+async  def send_timer(message):
+    chat_id = message.from_user.id
+    bot_message = await bot.send_message(chat_id , 'таймер на 100000 секунд')
+    for i in range(1,100000):
+        await asyncio.sleep(1)
+        await bot.edit_message_text(f'{100000 -i} прошло',chat_id, bot_message.id)
+        await bot.delete_message(chat_id , bot_message.id)
+#@bot.message_handler(content_types=["text1"])
+#async def draznilka(message):
+ #   chat_id = message.from_user.id
+  #  await bot.delete_message(chat_id , message.id)
+@bot.message_handler(content_types=['comanda22'])
+async def send_com(message):
+    chat_id = message.from_user.id
+    await bot.send_message(chat_id, '<i>text</i>')
+
 @bot.message_handler(commands=['help'])
 async def send_mesage(message):
     chat_id = message.from_user.id
@@ -35,6 +59,9 @@ async  def bot_foto(message):
 @bot.message_handler(commands=['Давайте поговорим?'])
 async def send_welcom(message):
     await bot.reply_to(message, 'давайте , можете задать мне вопрос')
+@bot.message_handler(commands=['ПРЫФВРФЫВОР0'])
+#async def send_jurn(message):
+ #   await  bot.send_message(<b>текст</b>)
 #@bot.message_handler(commands=['Давайте поговорим?'])
 #async def send_welcom(message):
     #await bot.reply_to(message, 'давайте , можете задать мне вопрос')
@@ -60,19 +87,33 @@ async def send_klava(message):
     markup.add(one_knopka , two_knopka , three_knopka,row_width=2)
     await bot.send_message(chat_id , '2 вариант кнопок', reply_markup=markup)
 
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['hep'])
 async def sendWelcom(message):
     chat_id = message.from_user.id
     list_buttons = ['1','2','3']
     await bot.send_message(chat_id, 'ТтттттттттттттТ', reply_markup=generate_btns(list_buttons, 2))
 
 def generate_btns(list_butonns, rows):
-    markup = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard=True)
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add(*list_butonns, row_width=rows)
     return (markup)
 
 
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['awerty'])
+async def qwerty_send(message):
+    chat_id = message.from_user.id
+    await bot.send_message(chat_id,'<b>text</b>')
+    await bot.send_message(chat_id,'<i>text</i>')
+    await bot.send_message(chat_id, '<u>text</u>')
+    await bot.send_message(chat_id, '<s>text</s>')
+    await bot.send_message(chat_id, '<code>text</code>')
+    await bot.send_message(chat_id, '<pre>text</pre>')
+    await bot.send_message(chat_id, '<tg-spoiler>text</tg-spoiler>')
+    await bot.send_message(chat_id, '<a href="https://learn.algoritmika.org/login">text</a>')
+    await bot.send_message(chat_id, '<a href="tg://user?id=(message.id)")">bold</>')
+
+
+@bot.message_handler(commands=['lp'])
 async def sendWelcom(message):
     chat_id = message.from_user.id
     markup = InlineKeyboardMarkup()
